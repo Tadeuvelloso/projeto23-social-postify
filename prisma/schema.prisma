@@ -11,24 +11,14 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   name     String
-  email    String    @unique
+  email    String  @unique
   password String
   avatar   String
-  Session  Session[]
   Posts    Posts[]
 
   @@map("users")
-}
-
-model Session {
-  id     Int    @id @default(autoincrement())
-  token  String
-  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
-
-  @@map("sessions")
 }
 
 model Posts {
@@ -36,10 +26,12 @@ model Posts {
   User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
   image         String
+  title         String
   text          String
   dateToPublish DateTime
-  published     Boolean
+  published     Boolean  @default(false)
   socialMedia   String
+  createdAt     DateTime @default(now())
 
   @@map("posts")
 }
